@@ -13,9 +13,8 @@ from cell import Cell
 
 
 def h(node):
-    # pythagoras theroem
-    # return np.sqrt(np.square(abs(node.i - end_node.i)) + np.square(abs(node.j - end_node.j)))
-    return np.abs(node.i - end_node.i) + np.abs(node.j - end_node.j)
+    return np.abs(node.i - end_node.i) + \
+           np.abs(node.j - end_node.j)
 
 
 def get_min(arr):
