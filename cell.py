@@ -7,6 +7,7 @@ class Cell:
         self.i = i
         self.j = j
         self.visited = False
+        self.visited_star = False
         self.current = False
         self.green = (0, 255, 0)
         self.red = (137, 41, 133)
@@ -14,6 +15,10 @@ class Cell:
         self.amount = amount
         self.w = int(600 / amount)
         self.right, self.left, self.down, self.up = True, True, True, True
+        self.parent = None
+        self.g_score = 9999999999999999999999999
+        self.f_score = 9999999999999999999999999
+        self.wall = False
         return
 
     def has_valid_pals(self, cells):
@@ -31,6 +36,22 @@ class Cell:
         if self.j + 1 < self.amount:
             pals.append(cells[self.i][self.j + 1])
         return [cell for cell in pals if cell.visited == False]
+
+    def get_pals(self, cells):
+        pals = []
+        # right pal
+        if self.i != 0 and not self.left:
+            pals.append(cells[self.i - 1][self.j])
+        # left pal
+        if self.i + 1 < self.amount and not self.right:
+            pals.append(cells[self.i + 1][self.j])
+        # down pal
+        if self.j != 0 and not self.up:
+            pals.append(cells[self.i][self.j - 1])
+        # up pal
+        if self.j + 1 < self.amount and not self.down:
+            pals.append(cells[self.i][self.j + 1])
+        return [cell for cell in pals if cell.visited_star == False]
 
     def rect(self, color):
         pygame.draw.rect(self.scr, color, (self.i * self.w + 100, self.j * self.w + 100, self.w, self.w))
@@ -73,6 +94,18 @@ class Cell:
         if self.j < other.j:
             # down
             self.down, other.up = False, False
+        return
+
+    def deactive(self):
+        self.red = (137, 41, 133)
+        return
+
+    def active(self):
+        self.red = (0, 0, 0)
+        return
+
+    def draw_green(self):
+        self.red = (0, 255, 0)
         return
 
     pass
