@@ -14,7 +14,8 @@ from cell import Cell
 
 def h(node):
     # pythagoras theroem
-    return np.sqrt(np.square(abs(node.i - end_node.i)) + np.square(abs(node.j - end_node.j)))
+    # return np.sqrt(np.square(abs(node.i - end_node.i)) + np.square(abs(node.j - end_node.j)))
+    return np.abs(node.i - end_node.i) + np.abs(node.j - end_node.j)
 
 
 def get_min(arr):
@@ -37,7 +38,6 @@ stack = []
 path = []
 cells = [[Cell(scr, c, r, cols) for r in range(cols)] for c in range(cols)]
 cells = np.array(cells)
-current = cells[0][0]
 start_node = cells[0][0]
 end_node = cells[-1][-1]
 
@@ -47,6 +47,7 @@ while True:
     start_node.g_score = 0
     start_node.f_score = h(start_node)
     open_set = [start_node]
+    current = cells[0][0]
     while True:
         if not current.visited:
             current.visited = True
