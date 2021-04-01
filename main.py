@@ -17,25 +17,6 @@ import pygame
 from cell import Cell
 
 
-def get_cell(active):
-    return cells[active[0]][active[1]]
-
-
-def handle_inputs(event):
-    get_cell(active_cell).deactive()
-    pressed_keys = pygame.key.get_pressed()
-    if pressed_keys[pygame.K_a]:
-        active_cell[0] = max(0, active_cell[0] - 1)
-    elif pressed_keys[pygame.K_d]:
-        active_cell[0] = min(cols - 1, active_cell[0] + 1)
-    elif pressed_keys[pygame.K_w]:
-        active_cell[1] = max(0, active_cell[1] - 1)
-    elif pressed_keys[pygame.K_s]:
-        active_cell[1] = min(cols - 1, active_cell[1] + 1)
-    get_cell(active_cell).active()
-    return
-
-
 def h(node):
     # pythagoras theroem
     return np.sqrt(np.square(abs(node.i - end_node.i)) + np.square(abs(node.j - end_node.j)))
