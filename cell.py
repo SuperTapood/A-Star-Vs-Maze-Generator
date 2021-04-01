@@ -108,4 +108,18 @@ class Cell:
         self.red = (0, 255, 0)
         return
 
+    def reset(self):
+        self.visited = False
+        self.visited_star = False
+        self.current = False
+        self.green = (0, 255, 0)
+        self.red = (137, 41, 133)
+        self.black = (0, 0, 0)
+        self.right, self.left, self.down, self.up = True, True, True, True
+        self.parent = None
+        self.g_score = 9999999999999999999999999
+        self.f_score = 9999999999999999999999999
+        self.wall = False
+        return
+
     pass

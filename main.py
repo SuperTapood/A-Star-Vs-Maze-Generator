@@ -32,23 +32,26 @@ def get_min(arr):
     return min_item
 
 
+active_cell = [0, 0]
+cols = 15
+width, height = 800, 800
+scr = pygame.display.set_mode((width, height))
+clock = pygame.time.Clock()
+end = None
+stack = []
+path = []
+cells = [[Cell(scr, c, r, cols) for r in range(cols)] for c in range(cols)]
+cells = np.array(cells)
+current = cells[0][0]
+start_node = cells[0][0]
+end_node = cells[-1][-1]
+
 while True:
-    active_cell = [0, 0]
-    cols = 20
-    width, height = 800, 800
-    scr = pygame.display.set_mode((width, height))
-    cells = [[Cell(scr, c, r, cols) for r in range(cols)] for c in range(cols)]
-    cells = np.array(cells)
     stack = []
-    current = cells[0][0]
-    clock = pygame.time.Clock()
-    end = None
-    start_node = cells[0][0]
-    end_node = cells[-1][-1]
+    path = []
     start_node.g_score = 0
     start_node.f_score = h(start_node)
     open_set = [start_node]
-    path = []
     while True:
         if not current.visited:
             current.visited = True
@@ -118,3 +121,5 @@ while True:
             if cell is not None:
                 cell.draw_green()
         pygame.display.update()
+    for cell in cells.flatten():
+        cell.reset()
