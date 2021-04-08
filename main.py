@@ -5,6 +5,7 @@
 """
 
 import random
+from time import time
 
 import numpy as np
 import pygame
@@ -27,8 +28,20 @@ def get_min(arr):
     return min_item
 
 
+def draw():
+    scr.fill((0, 0, 0))
+    for c in cells.flatten():
+        c.blit()
+    current.rect(current.green)
+    for eve in pygame.event.get():
+        if eve.type == pygame.QUIT:
+            exit()
+    pygame.display.update()
+    return
+
+
 active_cell = [0, 0]
-cols = 15
+cols = 70
 width, height = 800, 800
 scr = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
@@ -47,7 +60,10 @@ while True:
     start_node.f_score = h(start_node)
     open_set = [start_node]
     current = cells[0][0]
+    i = 0
     while True:
+        i += 1
+        print(i)
         if not current.visited:
             current.visited = True
         pals = current.has_valid_pals(cells)
@@ -58,14 +74,10 @@ while True:
             current.remove_walls(pal)
             current = pal
             stack.append(current)
-        scr.fill((0, 0, 0))
-        for cell in cells.flatten():
-            cell.blit()
-        current.rect(current.green)
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                exit()
-        pygame.display.update()
+        # for maze generation with bigger boards, you might want to comment
+        # this function out, it will make the maze generation instant bc
+        # python won't need to render anything
+        draw()
         if not stack:
             break
         current = stack.pop()
@@ -74,7 +86,7 @@ while True:
 
     while True:
         scr.fill((0, 0, 0))
-        clock.tick(50)
+        # clock.tick(200)
         if not open_set:
             print("AAA")
             # no solution
@@ -89,7 +101,7 @@ while True:
                 neighbor.parent = current
                 neighbor.g_score = current.g_score
                 neighbor.f_score = neighbor.g_score + h(neighbor)
-                if not neighbor in open_set:
+                if neighbor not in open_set:
                     open_set.append(neighbor)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -100,13 +112,15 @@ while True:
         pygame.display.update()
 
     par = current
+    start = time()
     while True:
-        try:
-            path.append(par)
-            par = par.parent
-        except Exception as e:
-            # print(e)
-            break
+        while True:
+            try:
+                path.append(par)
+                par = par.parent
+            except Exception as e:
+                # print(e)
+                break
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -114,7 +128,9 @@ while True:
             cell.blit()
         for cell in path:
             if cell is not None:
-                cell.draw_green()
+                cell.red = (0, 255, 0)
         pygame.display.update()
+        if time() - start >= 0.2:
+            break
     for cell in cells.flatten():
         cell.reset()

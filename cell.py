@@ -105,7 +105,7 @@ class Cell:
         return
 
     def draw_green(self):
-        self.red = (0, 255, 0)
+        self.red = (255, 0, 0)
         return
 
     def reset(self):
