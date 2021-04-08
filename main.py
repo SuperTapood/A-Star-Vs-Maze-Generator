@@ -112,15 +112,16 @@ while True:
                 par.in_path = True
                 par = par.parent
             except AttributeError as e:
+                # the path only needs to be drawn once bc its static
+                draw()
                 # break bc this means the path ended
                 break
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-        for cell in cells.flatten():
-            cell.blit()
         pygame.display.update()
-        if time() - start >= 0.2:
+        # display the path for what may or may not be 0.2 seconds
+        if time() - start >= 5:
             break
     for cell in cells.flatten():
         cell.reset()
