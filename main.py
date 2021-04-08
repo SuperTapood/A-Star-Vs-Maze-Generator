@@ -84,10 +84,8 @@ while True:
     # done generating
 
     while True:
-        scr.fill((0, 0, 0))
-        # clock.tick(200)
+        clock.tick(20)
         if not open_set:
-            print("AAA")
             # no solution
             break
         current = get_min(open_set)
@@ -102,11 +100,7 @@ while True:
                 neighbor.f_score = neighbor.g_score + h(neighbor)
                 if neighbor not in open_set:
                     open_set.append(neighbor)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-        for cell in cells.flatten():
-            cell.blit()
+        current.blit()
         pygame.display.update()
 
     par = current
@@ -114,10 +108,11 @@ while True:
     while True:
         while True:
             try:
+                # may raise AttributeError for NoneType and "parent"
                 par.in_path = True
                 par = par.parent
-            except Exception as e:
-                # print(e)
+            except AttributeError as e:
+                # break bc this means the path ended
                 break
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
