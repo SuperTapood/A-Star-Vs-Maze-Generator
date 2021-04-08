@@ -84,7 +84,7 @@ while True:
     # done generating
 
     while True:
-        clock.tick(20)
+        clock.tick(40)
         if not open_set:
             # no solution
             break
@@ -102,6 +102,9 @@ while True:
                     open_set.append(neighbor)
         current.blit()
         pygame.display.update()
+        for eve in pygame.event.get():
+            if eve.type == pygame.QUIT:
+                exit()
 
     par = current
     start = time()
@@ -121,7 +124,7 @@ while True:
                 exit()
         pygame.display.update()
         # display the path for what may or may not be 0.2 seconds
-        if time() - start >= 5:
+        if time() - start >= 0.2:
             break
     for cell in cells.flatten():
         cell.reset()
