@@ -24,7 +24,7 @@ class Cell:
         self.in_path = False
         return
 
-    def has_valid_pals(self, cells):
+    def get_valid_pals(self, cells):
         pals = []
         # right pal
         if self.i != 0:
@@ -56,19 +56,19 @@ class Cell:
             pals.append(cells[self.i][self.j + 1])
         return [cell for cell in pals if cell.visited_star == False]
 
-    def rect(self, color):
+    def draw_rect(self, color):
         pygame.draw.rect(self.scr, color, (self.i * self.w + 100, self.j * self.w + 100, self.w, self.w))
         return
 
     def blit(self):
         if self.in_path:
-            self.rect(self.green)
+            self.draw_rect(self.green)
         elif self.visited_star:
-            self.rect(self.red)
+            self.draw_rect(self.red)
         elif self.visited:
-            self.rect(self.purple)
+            self.draw_rect(self.purple)
         else:
-            self.rect(self.black)
+            self.draw_rect(self.black)
         self.draw_lines()
         return
 
@@ -85,7 +85,6 @@ class Cell:
             pygame.draw.line(self.scr, self.white, top_right, button_right, int(self.w / 3))
         if self.down:
             pygame.draw.line(self.scr, self.white, bottom_left, button_right, int(self.w / 3))
-        # line(surface, color, start_pos, end_pos, width)
         return
 
     def remove_walls(self, other):
@@ -103,33 +102,8 @@ class Cell:
             self.down, other.up = False, False
         return
 
-    # def deactive(self):
-    #     self.red = (137, 41, 133)
-    #     return
-    #
-    # def active(self):
-    #     self.red = (0, 0, 0)
-    #     return
-    #
-    # def draw_green(self):
-    #     self.red = (255, 0, 0)
-    #     return
-
     def reset(self):
-        self.visited = False
-        self.visited_star = False
-        self.current = False
-        self.green = (0, 255, 0)
-        self.purple = (137, 41, 133)
-        self.red = (255, 0, 0)
-        self.black = (0,) * 3
-        self.white = (255,) * 3
-        self.right, self.left, self.down, self.up = True, True, True, True
-        self.parent = None
-        self.g_score = 9999999999999999999999999
-        self.f_score = 9999999999999999999999999
-        self.wall = False
-        self.in_path = False
+        self.__init__(self.scr, self.i, self.j, self.amount)
         return
 
     pass

@@ -32,7 +32,7 @@ def draw():
     scr.fill((0, 0, 0))
     for c in cells.flatten():
         c.blit()
-    current.rect(current.green)
+    current.draw_rect(current.green)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             exit()
@@ -65,7 +65,7 @@ while True:
         print(i)
         if not current.visited:
             current.visited = True
-        pals = current.has_valid_pals(cells)
+        pals = current.get_valid_pals(cells)
         if pals:
             stack.append(current)
             index = random.randint(0, len(pals) - 1)
