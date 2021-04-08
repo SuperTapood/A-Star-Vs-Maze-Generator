@@ -41,7 +41,7 @@ def draw():
 
 
 active_cell = [0, 0]
-cols = 70
+cols = 20
 width, height = 800, 800
 scr = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
@@ -55,7 +55,6 @@ end_node = cells[-1][-1]
 
 while True:
     stack = []
-    path = []
     start_node.g_score = 0
     start_node.f_score = h(start_node)
     open_set = [start_node]
@@ -108,7 +107,6 @@ while True:
                 exit()
         for cell in cells.flatten():
             cell.blit()
-        current.draw_green()
         pygame.display.update()
 
     par = current
@@ -116,7 +114,7 @@ while True:
     while True:
         while True:
             try:
-                path.append(par)
+                par.in_path = True
                 par = par.parent
             except Exception as e:
                 # print(e)
@@ -126,9 +124,6 @@ while True:
                 exit()
         for cell in cells.flatten():
             cell.blit()
-        for cell in path:
-            if cell is not None:
-                cell.red = (0, 255, 0)
         pygame.display.update()
         if time() - start >= 0.2:
             break
