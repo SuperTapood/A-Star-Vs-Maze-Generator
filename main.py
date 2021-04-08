@@ -14,6 +14,7 @@ from cell import Cell
 
 
 def h(node):
+    # return np.sqrt(np.square(node.i - end_node.i) + np.square(node.j - end_node.j))
     return np.abs(node.i - end_node.i) + \
            np.abs(node.j - end_node.j)
 
@@ -59,10 +60,7 @@ while True:
     start_node.f_score = h(start_node)
     open_set = [start_node]
     current = cells[0][0]
-    i = 0
     while True:
-        i += 1
-        print(i)
         if not current.visited:
             current.visited = True
         pals = current.get_valid_pals(cells)
@@ -81,10 +79,12 @@ while True:
             break
         current = stack.pop()
 
+    # this will fix draw errors if the draw call on line 77 is commented out
+    # otherwise this is meaningless
+    # draw()
     # done generating
-
     while True:
-        clock.tick(40)
+        # clock.tick(40)
         if not open_set:
             # no solution
             break
