@@ -42,7 +42,7 @@ def draw():
 
 
 active_cell = [0, 0]
-cols = 20
+cols = 200
 width, height = 800, 800
 scr = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
@@ -74,14 +74,14 @@ while True:
         # for maze generation with bigger boards, you might want to comment
         # this function out, it will make the maze generation instant bc
         # python won't need to render anything
-        draw()
+        # draw()
         if not stack:
             break
         current = stack.pop()
 
     # this will fix draw errors if the draw call on line 77 is commented out
     # otherwise this is meaningless
-    # draw()
+    draw()
     # done generating
     while True:
         # clock.tick(40)
@@ -105,7 +105,6 @@ while True:
         for eve in pygame.event.get():
             if eve.type == pygame.QUIT:
                 exit()
-
     par = current
     start = time()
     while True:
