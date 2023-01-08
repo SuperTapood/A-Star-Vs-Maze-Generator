@@ -3,7 +3,6 @@
 2. reset the cells
 3. A*
 """
-
 import random
 from time import time
 
@@ -42,7 +41,7 @@ def draw():
 
 
 active_cell = [0, 0]
-cols = 200
+cols = 50
 width, height = 800, 800
 scr = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
